@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: secret-santa-redis
+    ports:
+      - "6378:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: secret-santa-bot
+    depends_on:
+      - redis
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_ADMINS=${TELEGRAM_ADMINS}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - REDIS_DB=${REDIS_DB:-0}
+      - TRIGGER_WORDS=${TRIGGER_WORDS:-}
+    restart: unless-stopped
+
+volumes:
+  redis-data:
+

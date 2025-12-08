@@ -1,0 +1,15 @@
+telegram:
+  bot_token: "YOUR_BOT_TOKEN_HERE"
+  admins:
+    - "nikiname"  # Username админа без @
+
+redis:
+  host: "localhost"  # Для локального запуска используйте "localhost"
+  port: "6378"        # Порт Redis (6378 - внешний порт из Docker)
+  password: ""        # Пароль Redis (если используется)
+  db: 0
+
+trigger_words:
+  - "слово1"
+  - "слово2"
+
