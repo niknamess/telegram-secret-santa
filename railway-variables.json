@@ -1,0 +1,7 @@
+{
+  "TELEGRAM_BOT_TOKEN": "your_bot_token_here",
+  "TELEGRAM_ADMINS": "nikiname",
+  "REDIS_DB": "0",
+  "TRIGGER_WORDS": "жопа,мат,слово1,слово2"
+}
+
