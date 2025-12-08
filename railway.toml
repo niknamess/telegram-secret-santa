@@ -1,0 +1,9 @@
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+startCommand = "./secret-santa-bot"
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
+
