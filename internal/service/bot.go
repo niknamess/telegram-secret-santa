@@ -791,7 +791,7 @@ func (s *SecretSantaBot) handleListParticipants(msg *tgbotapi.Message) {
 	}
 
 	var list strings.Builder
-	list.WriteString("📝 *Участники:*\\n\\n")
+	list.WriteString("📝 *Участники:*\n\n")
 	index := 1
 	for _, p := range participants {
 		escapedName := escapeMarkdown(p.FullName)
@@ -800,7 +800,7 @@ func (s *SecretSantaBot) handleListParticipants(msg *tgbotapi.Message) {
 			escapedUsername := escapeMarkdown(p.Username)
 			list.WriteString(fmt.Sprintf(" \\(@%s\\)", escapedUsername))
 		}
-		list.WriteString("\\n")
+		list.WriteString("\n")
 		index++
 	}
 
@@ -953,7 +953,7 @@ func (s *SecretSantaBot) handleListRestrictions(msg *tgbotapi.Message) {
 	}
 
 	var list strings.Builder
-	list.WriteString("📋 *Ограничения:*\\n\\n")
+	list.WriteString("📋 *Ограничения:*\n\n")
 
 	hasRestrictions := false
 
@@ -968,7 +968,7 @@ func (s *SecretSantaBot) handleListRestrictions(msg *tgbotapi.Message) {
 			}
 
 			escapedUserName := escapeMarkdown(user.FullName)
-			list.WriteString(fmt.Sprintf("*%s* не получит:\\n", escapedUserName))
+			list.WriteString(fmt.Sprintf("*%s* не получит:\n", escapedUserName))
 			for forbiddenID := range userRestrictions {
 				forbiddenUser := participants[forbiddenID]
 				if forbiddenUser != nil {
@@ -978,10 +978,10 @@ func (s *SecretSantaBot) handleListRestrictions(msg *tgbotapi.Message) {
 						escapedForbiddenUsername := escapeMarkdown(forbiddenUser.Username)
 						list.WriteString(fmt.Sprintf(" \\(@%s\\)", escapedForbiddenUsername))
 					}
-					list.WriteString("\\n")
+					list.WriteString("\n")
 				}
 			}
-			list.WriteString("\\n")
+			list.WriteString("\n")
 			hasRestrictions = true
 		}
 	} else {
@@ -997,7 +997,7 @@ func (s *SecretSantaBot) handleListRestrictions(msg *tgbotapi.Message) {
 			return
 		}
 
-		list.WriteString("*Вы* не получите:\\n")
+		list.WriteString("*Вы* не получите:\n")
 		for forbiddenID := range userRestrictions {
 			forbiddenUser := participants[forbiddenID]
 			if forbiddenUser != nil {
@@ -1007,7 +1007,7 @@ func (s *SecretSantaBot) handleListRestrictions(msg *tgbotapi.Message) {
 					escapedForbiddenUsername := escapeMarkdown(forbiddenUser.Username)
 					list.WriteString(fmt.Sprintf(" \\(@%s\\)", escapedForbiddenUsername))
 				}
-				list.WriteString("\\n")
+				list.WriteString("\n")
 			}
 		}
 		hasRestrictions = true
@@ -1087,11 +1087,11 @@ func (s *SecretSantaBot) handleGenerate(msg *tgbotapi.Message) {
 	err = s.GenerateAssignments()
 	if err != nil {
 		escapedError := escapeMarkdown(err.Error())
-		errorMsg := fmt.Sprintf("❌ *Ошибка при генерации распределения:*\\n\\n%s\\n\\n"+
-			"*Возможные причины:*\\n"+
-			"• Слишком много ограничений\\n"+
-			"• Невозможно создать валидное распределение с текущими ограничениями\\n\\n"+
-			"*Решение:*\\n"+
+		errorMsg := fmt.Sprintf("❌ *Ошибка при генерации распределения:*\n\n%s\n\n"+
+			"*Возможные причины:*\n"+
+			"• Слишком много ограничений\n"+
+			"• Невозможно создать валидное распределение с текущими ограничениями\n\n"+
+			"*Решение:*\n"+
 			"Попробуйте уменьшить количество ограничений или изменить их\\.", escapedError)
 		s.sendMessage(msg.Chat.ID, errorMsg)
 		if msg.Chat.IsGroup() || msg.Chat.IsSuperGroup() {
@@ -1194,9 +1194,9 @@ func (s *SecretSantaBot) handleStatus(msg *tgbotapi.Message) {
 	gameActiveText := map[bool]string{true: "✅ Да", false: "❌ Нет"}[gameActive]
 	gameStartedText := map[bool]string{true: "✅ Да", false: "❌ Нет"}[gameStarted]
 
-	status := fmt.Sprintf("📊 *Статус игры:*\\n\\n"+
-		"Участников: %d\\n"+
-		"Распределение создано: %s\\n"+
+	status := fmt.Sprintf("📊 *Статус игры:*\n\n"+
+		"Участников: %d\n"+
+		"Распределение создано: %s\n"+
 		"Результаты отправлены: %s",
 		len(participants),
 		escapeMarkdown(gameActiveText),
